@@ -64,25 +64,27 @@ const Login = () => {
         },
         body: JSON.stringify({ username, password }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Invalid username or password");
       }
-
+  
       const data = await response.json();
       console.log("Response data:", data); // Log the response data to check the structure
-
-      const { token, user } = data;
-
-      console.log("Login successful"); // Assuming login successful, you can redirect or set user state here
-
-      // Store the token and user details in session storage
-      sessionStorage.setItem("authToken", token);
-      sessionStorage.setItem("userId", user.id);  // Storing user ID
+  
+      const { user, token } = data;
+  
+      console.log("Login successful");
+  
+      // Store the user details and token in session storage
+      sessionStorage.setItem("userId", user.id);
       sessionStorage.setItem("username", user.username);
       sessionStorage.setItem("name", user.name);
-      console.log("Token and user details stored in session storage:", token, user);
-
+      console.log("User details stored in session storage:", user);
+  
+      // Log user ID after being set
+      console.log("User ID:", sessionStorage.getItem("userId"));
+  
       // Redirect to another page
       navigate("/dashboard");
     } catch (error) {

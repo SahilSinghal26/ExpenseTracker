@@ -24,7 +24,6 @@
 // const initialExpenseState = {
 //   expenseName: '',
 //   amount: '',
-//   paidBy: '',
 //   paymentMode: '',
 //   groupId: '',
 //   comments: ''
@@ -34,6 +33,7 @@
 //   const [expenses, setExpenses] = useState([]);
 //   const [open, setOpen] = useState(false);
 //   const [newExpense, setNewExpense] = useState(initialExpenseState);
+//   const [userId, setUserId] = useState('');
 
 //   useEffect(() => {
 //     const fetchExpenses = async () => {
@@ -50,6 +50,15 @@
 //     };
 
 //     fetchExpenses();
+//   }, []);
+
+//   useEffect(() => {
+//     // Retrieve the logged-in user's ID from session storage
+//     const userId = sessionStorage.getItem('userId');
+//     console.log(userId);
+//     if (userId) {
+//       setUserId(userId);
+//     }
 //   }, []);
 
 //   const handleOpen = () => setOpen(true);
@@ -69,12 +78,13 @@
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
+//     const expenseWithUser = { ...newExpense, paidBy: userId };
 //     const response = await fetch('http://localhost:8080/expense', {
 //       method: 'POST',
 //       headers: {
 //         'Content-Type': 'application/json',
 //       },
-//       body: JSON.stringify(newExpense),
+//       body: JSON.stringify(expenseWithUser),
 //     });
 
 //     if (response.ok) {
@@ -155,16 +165,6 @@
 //               size="small"
 //             />
 //             <TextField
-//               label="Paid By"
-//               name="paidBy"
-//               value={newExpense.paidBy}
-//               onChange={handleChange}
-//               fullWidth
-//               margin="dense"
-//               type="number"
-//               size="small"
-//             />
-//             <TextField
 //               label="Payment Mode"
 //               name="paymentMode"
 //               value={newExpense.paymentMode}
@@ -209,57 +209,55 @@
 
 // export default AllExpenses;
 
-
-
-
-import React, { useState, useEffect } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import React, { useState, useEffect } from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const style = {
-  position: 'absolute',
-  top: '45%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "45%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 450,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   boxShadow: 24,
   marginTop: 8.5,
 };
 
 const initialExpenseState = {
-  expenseName: '',
-  amount: '',
-  paymentMode: '',
-  groupId: '',
-  comments: ''
+  expenseName: "",
+  amount: "",
+  paymentMode: "",
+  groupId: "",
+  comments: "",
 };
 
 const AllExpenses = () => {
   const [expenses, setExpenses] = useState([]);
   const [open, setOpen] = useState(false);
   const [newExpense, setNewExpense] = useState(initialExpenseState);
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await fetch('http://localhost:8080/expense'); // Replace with your actual endpoint
+        const response = await fetch("http://localhost:8080/expense");
         if (!response.ok) {
-          throw new Error('Failed to fetch expenses');
+          throw new Error("Failed to fetch expenses");
         }
         const data = await response.json();
         setExpenses(data);
       } catch (error) {
-        console.error('Error fetching expenses:', error);
+        console.error("Error fetching expenses:", error);
       }
     };
 
@@ -267,11 +265,29 @@ const AllExpenses = () => {
   }, []);
 
   useEffect(() => {
-    // Retrieve the logged-in user's ID from session storage
-    const userId = sessionStorage.getItem('userId');
-    console.log(userId);
+    const userId = sessionStorage.getItem("userId");
     if (userId) {
       setUserId(userId);
+      // console.log(userId);
+      const fetchUserDetails = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:8080/api/user/${userId}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch user details");
+          }
+          const user = await response.json();
+          // console.log(user);
+          setUsername(user.username);
+          // console.log(username);
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+          setUsername("Loading..."); // Set to loading state in case of error
+        }
+      };
+
+      fetchUserDetails();
     }
   }, []);
 
@@ -279,24 +295,24 @@ const AllExpenses = () => {
 
   const handleClose = () => {
     setOpen(false);
-    setNewExpense(initialExpenseState); // Reset the form fields when modal closes
+    setNewExpense(initialExpenseState);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewExpense({
       ...newExpense,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const expenseWithUser = { ...newExpense, paidBy: userId };
-    const response = await fetch('http://localhost:8080/expense', {
-      method: 'POST',
+    const expenseWithUser = { ...newExpense, paidBy: username };
+    const response = await fetch("http://localhost:8080/expense", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(expenseWithUser),
     });
@@ -306,7 +322,7 @@ const AllExpenses = () => {
       setExpenses([...expenses, createdExpense]);
       handleClose();
     } else {
-      console.error('Failed to create expense');
+      console.error("Failed to create expense");
     }
   };
 
@@ -314,9 +330,16 @@ const AllExpenses = () => {
     <div>
       <h2 style={{ marginBottom: "30px" }}>All Expenses</h2>
       <Grid container style={{ marginLeft: "10px", border: "2px solid green" }}>
-        {expenses.map(expense => (
+        {expenses.map((expense) => (
           <Grid item xs={4} key={expense.id}>
-            <Card variant="outlined" style={{ height: "200px", width: "300px", border: "2px solid red" }}>
+            <Card
+              variant="outlined"
+              style={{
+                height: "200px",
+                width: "300px",
+                border: "2px solid red",
+              }}
+            >
               <CardContent>
                 <Typography variant="h5" component="div">
                   {expense.expenseName}
@@ -325,7 +348,7 @@ const AllExpenses = () => {
                   Amount: {expense.amount}
                 </Typography>
                 <Typography color="text.secondary">
-                  Paid By: {expense.paidBy}
+                  Paid By: {username}
                 </Typography>
                 <Typography color="text.secondary">
                   Payment Mode: {expense.paymentMode}
@@ -341,15 +364,14 @@ const AllExpenses = () => {
           </Grid>
         ))}
       </Grid>
-
       <Fab
         color="secondary"
         aria-label="add"
-        style={{ position: 'fixed', bottom: '16px', right: '16px' }}
-        onClick={handleOpen}>
+        style={{ position: "fixed", bottom: "16px", right: "16px" }}
+        onClick={handleOpen}
+      >
         <AddIcon />
       </Fab>
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -406,7 +428,14 @@ const AllExpenses = () => {
               margin="dense"
               size="small"
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', gap: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "10px",
+                gap: "20px",
+              }}
+            >
               <Button variant="outlined" color="primary" onClick={handleClose}>
                 Cancel
               </Button>
@@ -419,7 +448,6 @@ const AllExpenses = () => {
       </Modal>
     </div>
   );
-}
+};
 
 export default AllExpenses;
-
