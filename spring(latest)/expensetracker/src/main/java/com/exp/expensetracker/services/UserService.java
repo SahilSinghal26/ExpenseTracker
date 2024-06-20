@@ -1,5 +1,6 @@
 package com.exp.expensetracker.services;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,12 @@ public class UserService {
 
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    // getting user by id
+    public User getUserById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
     }
 
 }

@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,20 +43,31 @@ public class UserController {
         HashMap<String, Object> result = new HashMap<>();
 
         if (isValid) {
+            // Fetch user details
+            User user = userService.getUserByUsername(loginRequest.getUsername());
+
             String tokenString = loginRequest.getUsername() + ";" + loginRequest.getPassword();
             String token = Base64.getEncoder().encodeToString(tokenString.getBytes());
             result.put("token", token);
 
-            // Fetch user details
-            User user = userService.getUserByUsername(loginRequest.getUsername());
-            HashMap<String, String> userDetails = new HashMap<>();
-            userDetails.put("username", user.getUsername());
-            result.put("user", userDetails);
+            // Add user details to response
+            result.put("user", user);
 
             return ResponseEntity.ok(result);
         } else {
             result.put("error", "Invalid credentials");
             return ResponseEntity.status(401).body(result);
+        }
+    }
+
+    // getting user by id
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
