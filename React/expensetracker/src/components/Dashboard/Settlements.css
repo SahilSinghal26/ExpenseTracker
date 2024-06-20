@@ -1,0 +1,17 @@
+.settlements-page-container{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.give-money{
+    width: 50%;
+    border-right: 1px solid black;
+    height: 100%;
+}
+.take-money{
+    width: 50%;
+    border-left: 1px solid black ;
+    height: 100%;
+}
