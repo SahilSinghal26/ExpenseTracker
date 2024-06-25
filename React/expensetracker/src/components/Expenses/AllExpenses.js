@@ -331,9 +331,11 @@ const AllExpenses = () => {
   return (
     <div>
       <h2>All Expenses</h2>
-      <Grid container>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {expenses.map((expense) => (
-          <CardSkeletion expense={expense}/>
+          <Grid item>
+            <CardSkeletion expense={expense}/>
+          </Grid>
           // <Grid item xs={4} key={expense.id}>
           //   <Card
           //     variant="outlined"
