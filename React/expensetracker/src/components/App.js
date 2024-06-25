@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,15 +15,12 @@ import AllExpenses from "./Expenses/AllExpenses";
 import GroupDetails from "./Groups/GroupDetails";
 import UsersList from "./UserList";
 import UserForm from "./UserForm";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 function App() {
   return (
     <Router >
-      {/* <Navbar />
-      <Sidebar /> */}
-      <div
-        id="app"
-        style={{ width: "100%", height: "100vh"}}
-      >
+      <div id="app">
         <Layout>
           <Routes>
             <Route path="/dashboard" element={<Settlements />} />

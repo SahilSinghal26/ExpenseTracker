@@ -220,6 +220,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import CardSkeletion from "../Card/CardSkeleton";
 
 const style = {
   position: "absolute",
@@ -230,6 +231,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   marginTop: 8.5,
+  padding: "20px",
 };
 
 const initialExpenseState = {
@@ -328,8 +330,8 @@ const AllExpenses = () => {
 
   return (
     <div>
-      <h2 style={{ marginBottom: "30px" }}>All Expenses</h2>
-      <Grid container style={{ marginLeft: "10px", border: "2px solid green" }}>
+      <h2>All Expenses</h2>
+      <Grid container>
         {expenses.map((expense) => (
           <Grid item xs={4} key={expense.id}>
             <Card
@@ -365,7 +367,7 @@ const AllExpenses = () => {
         ))}
       </Grid>
       <Fab
-        color="secondary"
+        color="primary"
         aria-label="add"
         style={{ position: "fixed", bottom: "16px", right: "16px" }}
         onClick={handleOpen}
@@ -439,13 +441,15 @@ const AllExpenses = () => {
               <Button variant="outlined" color="primary" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button type="submit" variant="contained" color="primary">
                 Add Expense
               </Button>
             </div>
           </form>
         </Box>
       </Modal>
+      <CardSkeletion />
+      <CardSkeletion />
     </div>
   );
 };

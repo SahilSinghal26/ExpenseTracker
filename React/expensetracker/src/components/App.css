@@ -1,5 +1,22 @@
-#app{
-    /* display: flex; */
+* {
+    box-sizing: border-box;
 }
-.routes{
+:root {
+    --color-primary: #001829;
+    --color-secondary: #2bb5f7;
+    --color-text: #f9f9f9;
+}
+body {
+    height: 100vh;
+    /* color: var(--color-text); */
+    background-color: var(--color-primary);
+}
+
+.app-container {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+h2 {
+    color: var(--color-text);
 }

@@ -1,53 +1,7 @@
-// import React, {useState} from 'react'
-// import { Link } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
-// import "./Login.css";
-
-// const Login = () => {
-//   let navigate = useNavigate();
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // navigate('/dashboard');
-//     console.log('Username:', username);
-//     console.log('Password:', password);
-//     // You can add more logic here to handle form submission, such as sending data to a server
-//   };
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <h2>Login</h2>
-//       <div>
-//         <label htmlFor="username">Username:</label>
-//         <input
-//           type="text"
-//           id="username"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//         />
-//       </div>
-//       <div>
-//         <label htmlFor="password">Password:</label>
-//         <input
-//           type="password"
-//           id="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//         />
-//       </div>
-//       <button type="submit">Submit</button>
-//       <p>
-//       New User? <Link to="/signup">Signup here</Link>
-//       </p>
-//     </form>
-//   )
-// }
-// export default Login
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';  
+import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -94,30 +48,16 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <div className="login-card">
+        <h2>Expense Tracker</h2>
+        <h3>Enter your credentials</h3>
+        <form className="login-form">
+          <input id="username" type="text" placeholder="Username" autoComplete="false"/>
+          <input id="password" type="password" placeholder="Password"/>
+          <a href="#">Forgot Password?</a>
+          <button onClick={handleLogin}>Login</button>
+        </form>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button onClick={handleLogin}>Login</button>
-      <p>
-        New User? <Link to="/signup">Signup here</Link>
-      </p>
-    </div>
   );
 };
 

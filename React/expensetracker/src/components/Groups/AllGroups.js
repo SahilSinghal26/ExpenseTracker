@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import "./AllGroups.css";
 
 const GridContainer = styled.div`
   display: grid;
@@ -29,7 +30,7 @@ const FixedFab = styled(Fab)`
 
 const GroupList = ({ groups, onGroupClick, }) => (
   <div style={{ textAlign: "center" }}>
-    <h1>Your groups</h1>
+    <h2>Your Groups</h2>
     <GridContainer>
       {groups.map((group) => (
         <Box key={group.id} sx={{ minWidth: 275 }}>
@@ -155,12 +156,12 @@ const AllGroups = () => {
     <div>
       <>
         <GroupList groups={groups} onGroupClick={groupDetailsClick} username={username} />
-        <FixedFab color="secondary" aria-label="add" onClick={handleFabClick}>
+        <FixedFab color="primary" aria-label="add" onClick={handleFabClick}>
           <AddIcon />
         </FixedFab>
       </>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Group Details</DialogTitle>
+      <Dialog open={open} onClose={handleClose} fullWidth="xs">
+        <DialogTitle className="title">Add Group Details</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -174,10 +175,10 @@ const AllGroups = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleAddGroup} color="primary">
+          <Button onClick={handleAddGroup} color="primary" variant="contained">
             Add Group
           </Button>
         </DialogActions>
