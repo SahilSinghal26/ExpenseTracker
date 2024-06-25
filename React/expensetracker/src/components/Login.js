@@ -52,8 +52,8 @@ const Login = () => {
         <h2>Expense Tracker</h2>
         <h3>Enter your credentials</h3>
         <form className="login-form">
-          <input id="username" type="text" placeholder="Username" autoComplete="false"/>
-          <input id="password" type="password" placeholder="Password"/>
+          <input id="username" type="text" placeholder="Username" autoComplete="false" onChange={(e) => setUsername(e.target.value)}/>
+          <input id="password" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
           <a href="#">Forgot Password?</a>
           <button onClick={handleLogin}>Login</button>
         </form>

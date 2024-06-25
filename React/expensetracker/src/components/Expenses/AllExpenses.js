@@ -281,6 +281,7 @@ const AllExpenses = () => {
           }
           const user = await response.json();
           // console.log(user);
+          setUserId(user.userId);
           setUsername(user.username);
           // console.log(username);
         } catch (error) {
