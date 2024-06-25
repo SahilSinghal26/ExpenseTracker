@@ -220,7 +220,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import CardSkeletion from "../Card/CardSkeleton";
+import CardSkeletion from "../Card/ExpenseCard";
 
 const style = {
   position: "absolute",
@@ -333,37 +333,38 @@ const AllExpenses = () => {
       <h2>All Expenses</h2>
       <Grid container>
         {expenses.map((expense) => (
-          <Grid item xs={4} key={expense.id}>
-            <Card
-              variant="outlined"
-              style={{
-                height: "200px",
-                width: "300px",
-                border: "2px solid red",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {expense.expenseName}
-                </Typography>
-                <Typography color="text.secondary">
-                  Amount: {expense.amount}
-                </Typography>
-                <Typography color="text.secondary">
-                  Paid By: {username}
-                </Typography>
-                <Typography color="text.secondary">
-                  Payment Mode: {expense.paymentMode}
-                </Typography>
-                <Typography color="text.secondary">
-                  Group ID: {expense.groupId}
-                </Typography>
-                <Typography color="text.secondary">
-                  Comments: {expense.comments}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          <CardSkeletion expense={expense}/>
+          // <Grid item xs={4} key={expense.id}>
+          //   <Card
+          //     variant="outlined"
+          //     style={{
+          //       height: "200px",
+          //       width: "300px",
+          //       border: "2px solid red",
+          //     }}
+          //   >
+          //     <CardContent>
+          //       <Typography variant="h5" component="div">
+          //         {expense.expenseName}
+          //       </Typography>
+          //       <Typography color="text.secondary">
+          //         Amount: {expense.amount}
+          //       </Typography>
+          //       <Typography color="text.secondary">
+          //         Paid By: {username}
+          //       </Typography>
+          //       <Typography color="text.secondary">
+          //         Payment Mode: {expense.paymentMode}
+          //       </Typography>
+          //       <Typography color="text.secondary">
+          //         Group ID: {expense.groupId}
+          //       </Typography>
+          //       <Typography color="text.secondary">
+          //         Comments: {expense.comments}
+          //       </Typography>
+          //     </CardContent>
+          //   </Card>
+          // </Grid>
         ))}
       </Grid>
       <Fab
@@ -448,8 +449,6 @@ const AllExpenses = () => {
           </form>
         </Box>
       </Modal>
-      <CardSkeletion />
-      <CardSkeletion />
     </div>
   );
 };
