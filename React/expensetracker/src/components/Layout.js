@@ -5,7 +5,7 @@ import "./Layout.css";
 function Layout({ children }) {
   const location = useLocation()
   const isLoginPage = () => {
-    return (location.pathname == '/' || location.pathname == '/login')
+    return (location.pathname === '/' || location.pathname.toLowerCase() === '/login' || location.pathname.toLowerCase() === '/signup')
   }
   const getContainerClass = () => {
     return isLoginPage() ? "login-container" : "app-container"

@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import GroupCard from "../Card/GroupCard";
 import "./AllGroups.css";
 
 const GridContainer = styled.div`
@@ -21,19 +22,13 @@ const GridContainer = styled.div`
   gap: 66px;
 `;
 
-const FixedFab = styled(Fab)`
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 1000;
-`;
-
 const GroupList = ({ groups, onGroupClick, }) => (
   <div style={{ textAlign: "center" }}>
     <h2>Your Groups</h2>
     <GridContainer>
       {groups.map((group) => (
         <Box key={group.id} sx={{ minWidth: 275 }}>
+          <GroupCard group={group}/>
           <Card variant="outlined">
             <CardContent>
               <div
@@ -156,9 +151,14 @@ const AllGroups = () => {
     <div>
       <>
         <GroupList groups={groups} onGroupClick={groupDetailsClick} username={username} />
-        <FixedFab color="primary" aria-label="add" onClick={handleFabClick}>
-          <AddIcon />
-        </FixedFab>
+        <Fab
+        color="primary"
+        aria-label="add"
+        style={{ position: "fixed", bottom: "16px", right: "16px" }}
+        onClick={handleFabClick}
+      >
+        <AddIcon />
+      </Fab>
       </>
       <Dialog open={open} onClose={handleClose} fullWidth="xs">
         <DialogTitle className="title">Add Group Details</DialogTitle>

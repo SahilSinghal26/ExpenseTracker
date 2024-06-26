@@ -24,3 +24,6 @@
 .et-card-text {
     margin-bottom: 0;
 }
+.et-info-link:hover {
+    cursor: pointer;
+}

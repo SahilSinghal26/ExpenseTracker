@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';  
 import "./Login.css";
 
 const Login = () => {
@@ -51,12 +50,14 @@ const Login = () => {
       <div className="login-card">
         <h2>Expense Tracker</h2>
         <h3>Enter your credentials</h3>
-        <form className="login-form">
+        <div className="login-form">
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <input id="username" type="text" placeholder="Username" autoComplete="false" onChange={(e) => setUsername(e.target.value)}/>
           <input id="password" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-          <a href="#">Forgot Password?</a>
-          <button onClick={handleLogin}>Login</button>
-        </form>
+          <a className="login-form-link" href="#">Forgot Password?</a>
+          <button className="et-form-button" onClick={handleLogin}>Login</button>
+          <div className="message">New User? <a className="login-form-link" href="/Signup">Signup here</a></div>
+        </div>
       </div>
   );
 };

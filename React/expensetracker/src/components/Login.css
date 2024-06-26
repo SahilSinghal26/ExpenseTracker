@@ -56,7 +56,7 @@
 .login-form > input::placeholder {
   color: rgb(255 255 255 / 38%);
 }
-.login-form > button {
+.et-form-button {
   cursor: pointer;
   width: 100%;
   height: 56px;
@@ -69,7 +69,7 @@
   text-align: center;
   transition: all 0.4s;
 }
-.login-form > a {
+.login-form-link {
   color: var(--color-secondary);
   font-size: 16px;
   text-align: left;
