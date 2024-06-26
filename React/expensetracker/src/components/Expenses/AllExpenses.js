@@ -94,7 +94,7 @@ const AllExpenses = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const expenseWithUser = { ...newExpense, paidBy: username };
+    const expenseWithUser = { ...newExpense, paidBy: userId };
     const response = await fetch("http://localhost:8080/expense", {
       method: "POST",
       headers: {

@@ -10,9 +10,7 @@
   border-bottom: 1px solid #ccc;
   height: 75px;
   width: 100%;
-  /* background-image: url("../../Assets/et-background.svg"); */
-    /* background-repeat: no-repeat; */
-    /* background-size: cover; */
+  background-image: url("../../Assets/et-back.svg");
 }
 .container{
   width: 100%;
