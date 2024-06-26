@@ -23,22 +23,11 @@ public class GroupsController {
     @Autowired
     private GroupsService groupsService;
 
+    // getting all the groups
     @GetMapping
     public ResponseEntity<List<Groups>> getAllGroups() {
-        // public ResponseEntity<List<Person>> getAllGroups() {
         List<Groups> groupList = groupsService.getAllGroups();
         System.out.println(groupsService.getAllGroups());
-        // Map<String, String> hashMap = new HashMap<>();
-        // Person p1 = new Person(1, "sahil");
-        // Person p2 = new Person(2, "anuj");
-        // hashMap.put("Application", "application");
-        // hashMap.put("status", "Ok");
-        // List<Person> resList = new ArrayList<>();
-        // resList.add(p1);
-        // resList.add(p2);
-        // Retrieve all groups from the service
-        // return ResponseEntity.ok(resList); // Return the list of groups with HTTP
-        // status 200 (OK)
         return ResponseEntity.ok(groupList); // Return the list of groups with HTTP status 200 (OK)
     }
 
@@ -50,13 +39,33 @@ public class GroupsController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // creating a group
     @PostMapping
     public ResponseEntity<Groups> createGroup(@RequestBody Groups group) {
-        System.out.println("Groupv " + group);
         Groups newGroup = groupsService.createGroup(group);
         return new ResponseEntity<>(newGroup, HttpStatus.CREATED);
     }
 
+    // updating a group
+    @PutMapping("/{id}")
+    public ResponseEntity<Groups> updateGroup(@PathVariable int id, @RequestBody Groups groupDetails) {
+        Groups updatedGroup = groupsService.updateGroup(id, groupDetails);
+        if (updatedGroup != null) {
+            return ResponseEntity.ok(updatedGroup);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // deleting a group
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> deleteGroup(@PathVariable int id) {
+    // groupsService.deleteGroup(id);
+    // return ResponseEntity.noContent().build();
+    // }
+
+    // this is the endpoint which gives the members of the group of a particular
+    // groupId.
     @GetMapping("/{id}/members")
     public ResponseEntity<Set<User>> getGroupMembers(@PathVariable int id) {
         Set<User> members = groupsService.getGroupMembers(id);

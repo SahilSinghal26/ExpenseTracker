@@ -32,6 +32,25 @@ public class GroupsService {
         return groupsRepository.findById(id);
     }
 
+    // Method to update a group
+    public Groups updateGroup(int id, Groups groupDetails) {
+        Optional<Groups> optionalGroup = groupsRepository.findById(id);
+        if (optionalGroup.isPresent()) {
+            Groups group = optionalGroup.get();
+            // Update group details
+            group.setName(groupDetails.getName());
+            // Add more fields to update as needed
+            return groupsRepository.save(group);
+        } else {
+            return null; // or throw an exception as per your error handling strategy
+        }
+    }
+
+    // Method to delete a group by ID
+    // public void deleteGroup(int id) {
+    // groupsRepository.deleteById(id);
+    // }
+
     // method to get the members of a particular group(groupId)
     public Set<User> getGroupMembers(int groupId) {
         return groupsRepository.findById(groupId)

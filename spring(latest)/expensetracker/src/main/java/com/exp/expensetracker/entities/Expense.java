@@ -1,5 +1,7 @@
 package com.exp.expensetracker.entities;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,4 +31,6 @@ public class Expense {
     private Integer groupId;
     @Column(name = "comments")
     private String comments;
+    @Column(name = "expense_date")
+    private Date expenseDate;
 }
