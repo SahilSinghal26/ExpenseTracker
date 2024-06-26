@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -28,7 +29,11 @@ public class Groups {
     private String name;
 
     @Column(name = "group_admin")
-    private int groupAdmin_id; // person who created the group
+    private int groupAdmin_Id; // person who created the group
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_admin", referencedColumnName = "id", insertable = false, updatable = false)
+    private User groupAdmin;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "et_group_users", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
