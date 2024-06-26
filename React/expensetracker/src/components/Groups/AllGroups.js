@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -11,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import GroupCard from "../Card/GroupCard";
 import "./AllGroups.css";
 
 const GridContainer = styled.div`
@@ -21,53 +18,18 @@ const GridContainer = styled.div`
   gap: 66px;
 `;
 
-const FixedFab = styled(Fab)`
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 1000;
-`;
-
-const GroupList = ({ groups, onGroupClick, }) => (
+const GroupList = ({ groups}) => (
   <div style={{ textAlign: "center" }}>
     <h2>Your Groups</h2>
     <GridContainer>
       {groups.map((group) => (
-        <Box key={group.id} sx={{ minWidth: 275 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <div
-                style={{
-                  fontWeight: "bolder",
-                  fontSize: "20px",
-                  textAlign: "center",
-                }}
-              >
-                {group.name}
-              </div>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                Created by: {group.admin} {/* Display the username */}
-              </div>
-              <div
-                style={{
-                  textAlign: "center",
-                  cursor: "pointer",
-                  color: "blue",
-                }}
-                onClick={() => onGroupClick(group)}
-              >
-                View More details
-              </div>
-            </CardContent>
-          </Card>
-        </Box>
+          <GroupCard group={group}/>
       ))}
     </GridContainer>
   </div>
 );
 
 const AllGroups = () => {
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [groups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState("");
@@ -148,17 +110,18 @@ const AllGroups = () => {
     }
   };
 
-  const groupDetailsClick = (group) => {
-    navigate(`/groups/${group.id}`);
-  };
-
   return (
     <div>
       <>
-        <GroupList groups={groups} onGroupClick={groupDetailsClick} username={username} />
-        <FixedFab color="primary" aria-label="add" onClick={handleFabClick}>
-          <AddIcon />
-        </FixedFab>
+        <GroupList groups={groups}/>
+        <Fab
+        color="primary"
+        aria-label="add"
+        style={{ position: "fixed", bottom: "16px", right: "16px" }}
+        onClick={handleFabClick}
+      >
+        <AddIcon />
+      </Fab>
       </>
       <Dialog open={open} onClose={handleClose} fullWidth="xs">
         <DialogTitle className="title">Add Group Details</DialogTitle>

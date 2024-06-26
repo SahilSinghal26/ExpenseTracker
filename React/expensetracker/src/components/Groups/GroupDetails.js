@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const GroupDetails = () => {
   const { id } = useParams();
@@ -23,9 +23,11 @@ const GroupDetails = () => {
         setGroup(groupData);
         setGroupName(groupData.name); // Set the group name
         setGroupAdmin(sessionStorage.getItem("username")); // Retrieve group admin's username from session storage
-        
+
         // Fetch group members
-        const membersResponse = await fetch(`http://localhost:8080/groups/${id}/members`);
+        const membersResponse = await fetch(
+          `http://localhost:8080/groups/${id}/members`
+        );
         if (!membersResponse.ok) {
           throw new Error("Failed to fetch group members");
         }
@@ -48,24 +50,56 @@ const GroupDetails = () => {
         <CircularProgress color="inherit" />
       ) : group ? (
         <div style={{ width: "100%", height: "100%" }}>
-          <h1 style={{ textAlign: "center" }}>Group Name: {groupName}</h1>
+          <h1 style={{ textAlign: "center" }}>{groupName}</h1>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ fontWeight: "bold", marginRight: "10px" }}>Group Admin:</div>
-            <div>{groupAdmin}</div>
+            <h5>Group Admin: {groupAdmin}</h5>
           </div>
-          <div style={{ border: "2px solid pink", display: "flex", width: "100%", height: "fit-content", justifyContent: "center", textAlign: "center", gap: "145px" }}>
-            <div style={{ width: "30%", height: "fit-content", border: "2px solid red", position: "relative", padding: "10px" }}>
-              <div>Members</div>
-              <ul>
-                {members.map(member => (
-                  <li key={member.id}>{member.name}</li>
-                ))}
-              </ul>
-              <span style={{ position: "absolute", right: "10px", top: "3px", cursor: "pointer", color: "green", fontSize: "24px", fontWeight: "bold" }}>+</span>
+          <div className="row">
+            <div className="col-6">
+              <div className="card">
+                <div className="card-header">Members</div>
+                <div className="card-body">
+                  <ul>
+                    {members.map((member) => (
+                      <li key={member.id}>{member.name}</li>
+                    ))}
+                  </ul>
+                </div>
+                <span
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "3px",
+                    cursor: "pointer",
+                    color: "green",
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  +
+                </span>
+              </div>
             </div>
-            <div style={{ width: "50%", height: "fit-content", border: "2px solid blue", position: "relative", padding: "10px" }}>
-              Expenses
-              <span style={{ position: "absolute", right: "10px", top: "3px", cursor: "pointer", color: "green", fontSize: "24px", fontWeight: "bold" }}>+</span>
+            <div className="col-6">
+              <div className="card">
+                <div className="card-header">Expenses</div>
+                <span
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "3px",
+                    cursor: "pointer",
+                    color: "green",
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  +
+                </span>
+                <div className="card-body">
+                  Group Expenses List
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -77,4 +111,3 @@ const GroupDetails = () => {
 };
 
 export default GroupDetails;
-

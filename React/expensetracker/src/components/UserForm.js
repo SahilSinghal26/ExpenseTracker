@@ -26,7 +26,8 @@ function UserForm() {
   };
   
   return (
-    <form onSubmit={handleSubmit}>
+    <div className='login-card'>
+    <form className='login-form' onSubmit={handleSubmit}>
       <input
         type="text"
         name="username"
@@ -49,7 +50,9 @@ function UserForm() {
         placeholder="Password"
       />
       <button type="submit">Submit</button>
+      <div>Exisitng user? <a className='login-form-link' href='/login'>Login here</a></div>
     </form>
+    </div>
   );
 }
 

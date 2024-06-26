@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
@@ -66,7 +63,6 @@ const AllExpenses = () => {
             throw new Error('Failed to fetch user details');
           }
           const user = await response.json();
-          // console.log(user);
           setUserId(user.userId);
           setUsername(user.username);
         } catch (error) {
@@ -96,8 +92,8 @@ const AllExpenses = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const expenseWithUser = { ...newExpense, paidBy: userId };
-    const response = await fetch('http://localhost:8080/expense', {
-      method: 'POST',
+    const response = await fetch("http://localhost:8080/expense", {
+      method: "POST",
       headers: {
         'Content-Type': 'application/json',
       },
@@ -122,37 +118,6 @@ const AllExpenses = () => {
           <Grid item>
             <CardSkeletion expense={expense}/>
           </Grid>
-          // <Grid item xs={4} key={expense.id}>
-          //   <Card
-          //     variant="outlined"
-          //     style={{
-          //       height: "200px",
-          //       width: "300px",
-          //       border: "2px solid red",
-          //     }}
-          //   >
-          //     <CardContent>
-          //       <Typography variant="h5" component="div">
-          //         {expense.expenseName}
-          //       </Typography>
-          //       <Typography color="text.secondary">
-          //         Amount: {expense.amount}
-          //       </Typography>
-          //       <Typography color="text.secondary">
-          //         Paid By: {username}
-          //       </Typography>
-          //       <Typography color="text.secondary">
-          //         Payment Mode: {expense.paymentMode}
-          //       </Typography>
-          //       <Typography color="text.secondary">
-          //         Group ID: {expense.groupId}
-          //       </Typography>
-          //       <Typography color="text.secondary">
-          //         Comments: {expense.comments}
-          //       </Typography>
-          //     </CardContent>
-          //   </Card>
-          // </Grid>
         ))}
       </Grid>
       <Fab
