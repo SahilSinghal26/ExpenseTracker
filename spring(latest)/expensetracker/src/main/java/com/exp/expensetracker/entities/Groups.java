@@ -11,24 +11,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Groupss")
+@Table(name = "et_group")
+@SequenceGenerator(name = "GroupSequence", sequenceName = "et_group_seq", allocationSize = 1)
 public class Groups {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GroupSequence")
     private int id;
 
     @Column(name = "group_name")
     private String name;
 
-    @Column(name = "Group_admin")
+    @Column(name = "group_admin")
     private int groupAdmin_id; // person who created the group
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "group_users", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "et_group_users", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 }

@@ -1,43 +1,51 @@
 /* Navbar */
 .navbar {
-  display: block;
-    background-color: black;
-    border-bottom: 1px solid grey;
-    height: 75px;
-    width: 100%;
-  }
-  .container{
-    width: 100%;
-    /* background: green; */
+  top: 0;
+  left: 0;
+  position: sticky !important;
+  /* display: flex; */
+  background-color: var(--color-primary);
+  /* background-color: rgb(24 21 36 / 66%); */
+  /* opacity: 0.8; */
+  border-bottom: 1px solid #ccc;
+  height: 75px;
+  width: 100%;
+  /* background-image: url("../../Assets/et-background.svg"); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+}
+.container{
+  width: 100%;
+  display: flex;
+  margin: 0;
 }
   
-  .navbar-brand {
-    margin-bottom: 15px;
-    text-align: center;
-    /* border: 1px solid blue; */
-    color: rgb(177, 177, 177);
-    font-size: 1.7rem; /* Adjust the font size as needed */
-  }
+.navbar-brand {
+  margin-bottom: 15px;
+  text-align: center;
+  color: var(--color-text) !important;
+  font-size: 1.7rem; /* Adjust the font size as needed */
+}
 
-  .navbar-brand:hover{
-    color: white;
-    text-decoration: none;
-  } 
+.navbar-brand:hover{
+  color: white;
+  text-decoration: none;
+} 
 
-  .btn{
-    margin: 10px;
-  }
-  .btn:hover{
-    text-decoration: none;
-  }
-  
-  .btn-outline-success {
-    color: #28a745; /* Button text color */
-    border-color: #28a745; /* Button border color */
-  }
-  
-  .btn-outline-success:hover {
-    background-color: #28a745; /* Button background color on hover */
-    color: #fff; /* Button text color on hover */
-    text-decoration: none;
-  }
+.btn{
+  margin: 10px;
+}
+.btn:hover{
+  text-decoration: none;
+}
+
+.btn-outline-success {
+  color: #28a745; /* Button text color */
+  border-color: #28a745; /* Button border color */
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745; /* Button background color on hover */
+  color: #fff; /* Button text color on hover */
+  text-decoration: none;
+}
