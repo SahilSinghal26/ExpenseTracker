@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./Login";
-import Signup from "./Signup";
 import Navbar from "./Navbar/Navbar";
 import Layout from "./Layout";
 import Settlements from "./Dashboard/Settlements";
