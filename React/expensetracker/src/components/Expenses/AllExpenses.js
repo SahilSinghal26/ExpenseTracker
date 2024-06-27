@@ -25,7 +25,9 @@ const initialExpenseState = {
   amount: '',
   paymentMode: '',
   groupId: '',
-  comments: ''
+  comments: '',
+  paidBy: '',
+  date: ''
 };
 
 const AllExpenses = () => {
@@ -36,9 +38,9 @@ const AllExpenses = () => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    const fetchExpenses = async () => {
+    const fetchUserExpenses = async (userId) => {
       try {
-        const response = await fetch('http://localhost:8080/expense');
+        const response = await fetch(`http://localhost:8080/expenses/user/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch expenses');
         }
@@ -49,21 +51,24 @@ const AllExpenses = () => {
       }
     };
 
-    fetchExpenses();
+    const uId = sessionStorage.getItem('userId');
+    if (uId) {
+      setUserId(uId);
+      fetchUserExpenses(uId);
+    }
   }, []);
 
   useEffect(() => {
-    const userId = sessionStorage.getItem('userId');
-    if (userId) {
-      setUserId(userId);
+    const uId = sessionStorage.getItem('userId');
+    if (uId) {
+      setUserId(uId);
       const fetchUserDetails = async () => {
         try {
-          const response = await fetch(`http://localhost:8080/api/user/${userId}`);
+          const response = await fetch(`http://localhost:8080/api/user/${uId}`);
           if (!response.ok) {
             throw new Error('Failed to fetch user details');
           }
           const user = await response.json();
-          setUserId(user.userId);
           setUsername(user.username);
         } catch (error) {
           console.error('Error fetching user details:', error);
@@ -78,7 +83,7 @@ const AllExpenses = () => {
 
   const handleClose = () => {
     setOpen(false);
-    setNewExpense(initialExpenseState);
+    setNewExpense({ ...initialExpenseState, paidBy: userId });
   };
 
   const handleChange = (e) => {
@@ -91,21 +96,22 @@ const AllExpenses = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const expenseWithUser = { ...newExpense, paidBy: userId };
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const expenseWithUserAndDate = { ...newExpense, paidBy: userId, expenseDate: currentDate };
     const response = await fetch("http://localhost:8080/expense", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(expenseWithUser),
+      body: JSON.stringify(expenseWithUserAndDate),
     });
-
+  
     if (response.ok) {
       const createdExpense = await response.json();
       setExpenses([...expenses, createdExpense]);
       handleClose();
       console.log(createdExpense);
-    } else { 
+    } else {
       console.error('Failed to create expense');
     }
   };
@@ -115,8 +121,8 @@ const AllExpenses = () => {
       <h2>All Expenses</h2>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {expenses.map((expense) => (
-          <Grid item>
-            <CardSkeletion expense={expense}/>
+          <Grid item key={expense.id}>
+            <CardSkeletion expense={expense} />
           </Grid>
         ))}
       </Grid>

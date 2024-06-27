@@ -34,10 +34,14 @@ public class ExpenseController {
     }
 
     // getting all expenses of a given user id
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Expense>> getExpensesByUserId(@PathVariable("userId") int userId) {
+    @GetMapping("/expenses/user/{userId}")
+    public ResponseEntity<List<Expense>> getExpensesByUserId(@PathVariable int userId) {
         List<Expense> expenses = expenseService.getExpensesByUserId(userId);
-        return new ResponseEntity<>(expenses, HttpStatus.OK);
+        if (expenses != null) {
+            return ResponseEntity.ok(expenses);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // getting expense by id

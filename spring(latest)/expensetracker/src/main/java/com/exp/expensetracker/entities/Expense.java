@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -29,8 +31,9 @@ public class Expense {
     private int paidBy;
     @Column(name = "payment_mode")
     private String paymentMode;
-    @Column(name = "group_id")
-    private Integer groupId;
+    // @ManyToOne
+    @JoinColumn(name = "group_id")
+    private int groupId;
     @Column(name = "comments")
     private String comments;
     @Column(name = "expense_date")

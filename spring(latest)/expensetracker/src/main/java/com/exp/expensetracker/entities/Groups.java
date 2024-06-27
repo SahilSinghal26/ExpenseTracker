@@ -29,10 +29,10 @@ public class Groups {
     private String name;
 
     @Column(name = "group_admin")
-    private int groupAdmin_Id; // person who created the group
+    private Long groupAdmin_Id; // person who created the group
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_admin", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "group_admin", referencedColumnName = "id") // Assuming "id" is the column name in et_users table
     private User groupAdmin;
 
     @ManyToMany(fetch = FetchType.EAGER)
